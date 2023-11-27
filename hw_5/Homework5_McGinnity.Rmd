@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE}
 library(tidyverse)
+library(scales)
 ```
 
 
@@ -22,7 +23,7 @@ library(tidyverse)
 homicides <- read_csv("../data/homicide-data.csv")
 ```
 
-```{r}
+```{r baltimore}
 baltimore_homicides <- homicides %>% 
   filter(city == "Baltimore") %>% 
   mutate(reported_date = ymd(reported_date),
@@ -31,10 +32,31 @@ baltimore_homicides <- homicides %>%
 
 baltimore_monthly_homicides <- baltimore_homicides %>% 
   group_by(month, year) %>% 
-  count()
+  count(name = "homicides")
+
+baltimore_monthly_homicides <- baltimore_monthly_homicides %>% 
+  mutate(date = paste(month, year, sep = "-")) %>% 
+  mutate(date = my(date))
 
 cold_months <- c(11, 12, 1, 2, 3, 4)
-warm_months <- c(5, 6, 7, 8, 9, 10)
+
+baltimore_monthly_homicides$season <- ifelse(baltimore_monthly_homicides$month %in% cold_months, "Winter", "Summer")
+
+```
+
+```{r chart}
+baltimore_monthly_homicides %>% 
+  unique(homicides)
+  ggplot(data = baltimore_monthly_homicides,
+           aes(x = date,
+               y = homicides)) + 
+    geom_col(aes(fill = season)) +
+    geom_smooth(method = "loess") +
+    theme_dark() +
+    xlab("Date") +
+    ylab("Monthly homicides") +
+    ggtitle("Homicides in Baltimore, MD") +
+    theme(legend.position = "bottom")
 ```
 
 

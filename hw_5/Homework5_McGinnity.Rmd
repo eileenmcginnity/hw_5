@@ -45,17 +45,19 @@ baltimore_monthly_homicides$season <- ifelse(baltimore_monthly_homicides$month %
 ```
 
 ```{r chart}
-baltimore_monthly_homicides %>% 
-  ggplot(data = baltimore_monthly_homicides,
-           aes(x = date,
+baltimore_monthly_homicides %>%
+  ggplot(aes(x = date,
                y = homicides)) + 
-    geom_col(aes(fill = season)) +
-    geom_smooth(method = "loess") +
-    theme_dark() +
-    xlab("Date") +
-    ylab("Monthly homicides") +
-    ggtitle("Homicides in Baltimore, MD") +
-    theme(legend.position = "bottom")
+  geom_col(aes(fill = season)) +
+  geom_smooth(method = "loess") +
+  theme_dark() +
+  xlab("Date") +
+  ylab("Monthly homicides") +
+  ggtitle("Homicides in Baltimore, MD") +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank()) +
+  scale_fill_manual(values = c(Winter = "lightblue", Summer = "lightgray")) +
+  geom_vline(aes(x = ))
 ```
 
 

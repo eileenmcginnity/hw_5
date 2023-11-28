@@ -47,7 +47,8 @@ freddie_grey <- baltimore_homicides %>%
 ```
 
 ```{r chart}
-baltimore_monthly_homicides_plot <- baltimore_monthly_homicides %>%
+baltimore_monthly_homicides_plot <- 
+  baltimore_monthly_homicides %>%
   ggplot(aes(x = date,
                y = homicides)) + 
   geom_col(aes(fill = season)) +
@@ -56,13 +57,27 @@ baltimore_monthly_homicides_plot <- baltimore_monthly_homicides %>%
   xlab("Date") +
   ylab("Monthly homicides") +
   ggtitle("Homicides in Baltimore, MD") +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank()) +
-  scale_fill_manual(values = c(Winter = "lightblue", Summer = "lightgray")) +
-  geom_vline(data = freddie_grey, aes(xintercept = reported_date), color = "red", linetype = "dashed", size = 1)
+  scale_fill_manual(values = c(Winter = "lightblue",
+                               Summer = "lightgray")) +
+  geom_vline(data = freddie_grey,
+             aes(xintercept = reported_date),
+             color = "red",
+             linetype = "dashed",
+             size = 1.15) +
+  geom_text(data = freddie_grey,
+            aes(x = reported_date - 50,
+                y = 40,
+                label = "Arrest of\nFreddie Grey"),
+            size = 3.5,
+            color = "white",
+            hjust = 1) +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+
+print(baltimore_monthly_homicides_plot)
 ```
 
 ```{r save_figure}
-ggsave("baltimore_monthly_homicides_plot.png", plot = baltimore_monthly_homicides_plot, width = 9, height = 2.67, units = "in", dpi = 300)
+ggsave("../figures/baltimore_monthly_homicides_plot.png", plot = baltimore_monthly_homicides_plot, width = 9, height = 2.67, units = "in", dpi = 300)
 ```
 

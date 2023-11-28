@@ -42,6 +42,8 @@ cold_months <- c(11, 12, 1, 2, 3, 4)
 
 baltimore_monthly_homicides$season <- ifelse(baltimore_monthly_homicides$month %in% cold_months, "Winter", "Summer")
 
+freddie_grey <- baltimore_homicides %>% 
+  filter(victim_first == "FREDDIE CARLOS" & victim_last == "GREY")
 ```
 
 ```{r chart}
@@ -49,7 +51,7 @@ baltimore_monthly_homicides %>%
   ggplot(aes(x = date,
                y = homicides)) + 
   geom_col(aes(fill = season)) +
-  geom_smooth(method = "loess") +
+  geom_smooth(method = "loess", se = FALSE, span = 0.1) +
   theme_dark() +
   xlab("Date") +
   ylab("Monthly homicides") +
@@ -57,7 +59,7 @@ baltimore_monthly_homicides %>%
   theme(legend.position = "bottom") +
   theme(legend.title = element_blank()) +
   scale_fill_manual(values = c(Winter = "lightblue", Summer = "lightgray")) +
-  geom_vline(aes(x = ))
+  geom_vline(data = freddie_grey, aes(xintercept = reported_date), color = "red", linetype = "dashed", size = 1)
 ```
 
 

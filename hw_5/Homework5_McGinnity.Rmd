@@ -19,7 +19,7 @@ library(scales)
 ```
 
 
-```{r load_data}
+```{r load_data, message=FALSE, warning=FALSE}
 homicides <- read_csv("../data/homicide-data.csv")
 ```
 

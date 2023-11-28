@@ -46,7 +46,6 @@ baltimore_monthly_homicides$season <- ifelse(baltimore_monthly_homicides$month %
 
 ```{r chart}
 baltimore_monthly_homicides %>% 
-  unique(homicides)
   ggplot(data = baltimore_monthly_homicides,
            aes(x = date,
                y = homicides)) + 

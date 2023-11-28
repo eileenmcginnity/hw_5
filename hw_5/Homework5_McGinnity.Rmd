@@ -47,7 +47,7 @@ freddie_grey <- baltimore_homicides %>%
 ```
 
 ```{r chart}
-baltimore_monthly_homicides %>%
+baltimore_monthly_homicides_plot <- baltimore_monthly_homicides %>%
   ggplot(aes(x = date,
                y = homicides)) + 
   geom_col(aes(fill = season)) +
@@ -62,4 +62,7 @@ baltimore_monthly_homicides %>%
   geom_vline(data = freddie_grey, aes(xintercept = reported_date), color = "red", linetype = "dashed", size = 1)
 ```
 
+```{r save_figure}
+ggsave("baltimore_monthly_homicides_plot.png", plot = baltimore_monthly_homicides_plot, width = 9, height = 2.67, units = "in", dpi = 300)
+```
 
